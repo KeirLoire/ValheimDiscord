@@ -19,15 +19,16 @@ namespace ValheimDiscord
         private const string _pluginName = "ValheimDiscord";
         private const string _pluginVersion = "1.0.0";
 
-        private static Configuration _config;
         private static DiscordSocketClient _client;
         private static CommandService _commands;
+
+        public static Configuration PluginConfig;
 
         public static void Log(string message) => Debug.Log($"[{_pluginName}] {message}");
 
         public void Awake()
         {
-            _config = new Configuration(Config);
+            PluginConfig = new Configuration(Config);
 
             var harmony = new Harmony(_pluginGuid);
             harmony.PatchAll();
@@ -41,7 +42,7 @@ namespace ValheimDiscord
 
         public static async void SendDiscordChat(string message)
         {
-            var channel = await _client.GetChannelAsync(_config.DiscordTextChannelId) as IMessageChannel;
+            var channel = await _client.GetChannelAsync(PluginConfig.DiscordTextChannelId) as IMessageChannel;
 
             if (channel == null)
                 return;
@@ -65,7 +66,7 @@ namespace ValheimDiscord
                 _commands = new CommandService();
                 await _commands.AddModuleAsync<ValheimModule>(null);
 
-                await _client.LoginAsync(TokenType.Bot, _config.DiscordBotToken);
+                await _client.LoginAsync(TokenType.Bot, PluginConfig.DiscordBotToken);
                 await _client.StartAsync();
             }
             catch (Exception exception)
@@ -88,13 +89,13 @@ namespace ValheimDiscord
             var user = message.Author.GlobalName;
             var content = message.Content;
 
-            if (message.Content.StartsWith(_config.DiscordBotPrefix))
+            if (message.Content.StartsWith(PluginConfig.DiscordBotPrefix))
             {
                 var context = new SocketCommandContext(_client, message);
 
-                await _commands.ExecuteAsync(context, _config.DiscordBotPrefix.Length, null);
+                await _commands.ExecuteAsync(context, PluginConfig.DiscordBotPrefix.Length, null);
             }
-            else if (message.Channel.Id == _config.DiscordTextChannelId)
+            else if (message.Channel.Id == PluginConfig.DiscordTextChannelId)
                 SendIngameChat(user, content);
 
             Log($"[Discord]{message.Author.GlobalName} sent {message.Content}");
