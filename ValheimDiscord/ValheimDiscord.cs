@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 using HarmonyLib;
 using System;
@@ -20,6 +21,7 @@ namespace ValheimDiscord
 
         private static Configuration _config;
         private static DiscordSocketClient _client;
+        private static CommandService _commands;
 
         public static void Log(string message) => Debug.Log($"[{_pluginName}] {message}");
 
@@ -60,6 +62,9 @@ namespace ValheimDiscord
                 _client = new DiscordSocketClient(discordConfig);
                 _client.MessageReceived += MessageReceivedAsync;
 
+                _commands = new CommandService();
+                await _commands.AddModuleAsync<ValheimModule>(null);
+
                 await _client.LoginAsync(TokenType.Bot, _config.DiscordBotToken);
                 await _client.StartAsync();
             }
@@ -70,8 +75,13 @@ namespace ValheimDiscord
             }
         }
 
-        private async Task MessageReceivedAsync(SocketMessage message)
+        private async Task MessageReceivedAsync(SocketMessage socketMessage)
         {
+            var message = socketMessage as SocketUserMessage;
+
+            if (message == null)
+                return;
+
             if (message.Author.IsBot)
                 return;
 
@@ -79,15 +89,15 @@ namespace ValheimDiscord
             var content = message.Content;
 
             if (message.Content.StartsWith(_config.DiscordBotPrefix))
-                HandleCommandAsync(message);
+            {
+                var context = new SocketCommandContext(_client, message);
+
+                await _commands.ExecuteAsync(context, _config.DiscordBotPrefix.Length, null);
+            }
             else if (message.Channel.Id == _config.DiscordTextChannelId)
                 SendIngameChat(user, content);
 
             Log($"[Discord]{message.Author.GlobalName} sent {message.Content}");
-        }
-
-        private async Task HandleCommandAsync(SocketMessage message)
-        {
         }
 
         private void SendIngameChat(string username, string message)

@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="Discord\MonoRestClient.cs" />
     <Compile Include="Discord\MonoRestClientProvider.cs" />
+    <Compile Include="Discord\ValheimModule.cs" />
     <Compile Include="Model\Configuration.cs" />
     <Compile Include="Model\MultipartFile.cs" />
     <Compile Include="Patches\ChatPatch.cs" />
