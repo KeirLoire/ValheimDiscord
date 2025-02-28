@@ -96,27 +96,9 @@ namespace ValheimDiscord
                 await _commands.ExecuteAsync(context, PluginConfig.DiscordBotPrefix.Length, null);
             }
             else if (message.Channel.Id == PluginConfig.DiscordTextChannelId)
-                SendIngameChat(user, content);
+                ValheimUtils.SendIngameChat(content, user);
 
             Log($"[Discord]{message.Author.GlobalName} sent {message.Content}");
-        }
-
-        private void SendIngameChat(string username, string message)
-        {
-            if (ZNet.instance == null)
-            {
-                Log("ZNet.instance is null.");
-                return;
-            }
-
-            var userInfo = new UserInfo()
-            {
-                Name = username,
-                Gamertag = username,
-                NetworkUserId = "Discord"
-            };
-
-            ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "ChatMessage", Vector3.zero, 0, userInfo, message, userInfo.NetworkUserId);
         }
     }
 }

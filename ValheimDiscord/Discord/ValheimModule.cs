@@ -140,15 +140,8 @@ namespace ValheimDiscord.Discord
 
             if (ValheimDiscord.PluginConfig.DiscordAdminList.Contains(Context.User.Id.ToString()))
             {
-                var userInfo = new UserInfo()
-                {
-                    Name = "Server",
-                    Gamertag = "Server",
-                    NetworkUserId = "Discord"
-                };
-
-                ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "ShowMessage", 2, message);
-                ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "ChatMessage", Vector3.zero, 0, userInfo, message, userInfo.NetworkUserId);
+                ValheimUtils.BroadcastMessage(message);
+                ValheimUtils.SendIngameChat(message);
 
                 embedBuilder.AddField("[Status]", $"Message '{message}' has been sent.");
             }
