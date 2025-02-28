@@ -122,6 +122,7 @@
     <Compile Include="Model\Configuration.cs" />
     <Compile Include="Model\MultipartFile.cs" />
     <Compile Include="Patches\ChatPatch.cs" />
+    <Compile Include="Patches\ZNetPatch.cs" />
     <Compile Include="ValheimDiscord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
