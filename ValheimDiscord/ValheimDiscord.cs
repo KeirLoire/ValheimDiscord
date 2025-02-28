@@ -1,4 +1,7 @@
 ﻿using BepInEx;
+using Discord.WebSocket;
+using System;
+using System.Threading;
 using UnityEngine;
 using ValheimDiscord.Model;
 
@@ -12,6 +15,7 @@ namespace ValheimDiscord
         private const string _pluginVersion = "1.0.0";
 
         private Configuration _config;
+        private DiscordSocketClient _client;
 
         public void Log(string message) => Debug.Log($"[{_pluginName}] {message}");
 
@@ -20,7 +24,31 @@ namespace ValheimDiscord
             _config = new Configuration(Config);
 
             this.Log("Loaded.");
+
+            var thread = new Thread(StartClientAsync);
+            thread.IsBackground = true;
+            thread.Start();
         }
 
+        private async void StartClientAsync()
+        {
+            try
+            {
+                var discordConfig = new DiscordSocketConfig
+                {
+                    GatewayIntents = Discord.GatewayIntents.AllUnprivileged | Discord.GatewayIntents.MessageContent
+                };
+
+                _client = new DiscordSocketClient(discordConfig);
+
+                await _client.LoginAsync(Discord.TokenType.Bot, _config.DiscordBotToken);
+                await _client.StartAsync();
+            }
+            catch (Exception exception)
+            {
+                this.Log("Error occured.");
+                this.Log(exception.Message);
+            }
+        }
     }
 }
