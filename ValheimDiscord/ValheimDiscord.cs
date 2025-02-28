@@ -109,7 +109,7 @@ namespace ValheimDiscord
                 return;
             }
 
-            var userInfo = new UserInfo
+            var userInfo = new UserInfo()
             {
                 Name = username,
                 Gamertag = username,

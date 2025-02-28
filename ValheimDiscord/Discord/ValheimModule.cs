@@ -3,6 +3,8 @@ using Discord.Commands;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
+using Color = Discord.Color;
 
 namespace ValheimDiscord.Discord
 {
@@ -117,6 +119,38 @@ namespace ValheimDiscord.Discord
                 {
                     embedBuilder.AddField("[Status]", $"Player '{player}' has already been unbanned.");
                 }
+            }
+            else
+                embedBuilder.AddField("[Status]", "You do not have permission to run this command.");
+
+            await ReplyAsync(null, false, embedBuilder.Build());
+        }
+
+        [Command("broadcast")]
+        [Summary("Broadcast a message to the server.")]
+        public async Task BroadcastAsync([Summary("The message")] string message)
+        {
+            if (ZNet.instance == null)
+            {
+                ValheimDiscord.Log("ZNet.instance is null.");
+                return;
+            }
+
+            var embedBuilder = CreateEmbedBuilder();
+
+            if (ValheimDiscord.PluginConfig.DiscordAdminList.Contains(Context.User.Id.ToString()))
+            {
+                var userInfo = new UserInfo()
+                {
+                    Name = "Server",
+                    Gamertag = "Server",
+                    NetworkUserId = "Discord"
+                };
+
+                ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "ShowMessage", 2, message);
+                ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "ChatMessage", Vector3.zero, 0, userInfo, message, userInfo.NetworkUserId);
+
+                embedBuilder.AddField("[Status]", $"Message '{message}' has been sent.");
             }
             else
                 embedBuilder.AddField("[Status]", "You do not have permission to run this command.");
