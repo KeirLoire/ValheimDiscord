@@ -126,7 +126,7 @@
     <Compile Include="Patches\ZNetPatch.cs" />
     <Compile Include="ValheimDiscord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValheimUtils.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

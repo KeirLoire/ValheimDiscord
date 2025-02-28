@@ -96,7 +96,7 @@ namespace ValheimDiscord
                 await _commands.ExecuteAsync(context, PluginConfig.DiscordBotPrefix.Length, null);
             }
             else if (message.Channel.Id == PluginConfig.DiscordTextChannelId)
-                ValheimUtils.SendIngameChat(content, user);
+                Utils.SendIngameChat(content, user);
 
             Log($"[Discord]{message.Author.GlobalName} sent {message.Content}");
         }

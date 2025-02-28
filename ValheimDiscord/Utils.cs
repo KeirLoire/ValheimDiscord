@@ -2,7 +2,7 @@
 
 namespace ValheimDiscord
 {
-    public static class ValheimUtils
+    public static class Utils
     {
         public static void SendIngameChat(string message, string username = "Server")
         {

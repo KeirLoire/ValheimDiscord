@@ -140,8 +140,8 @@ namespace ValheimDiscord.Discord
 
             if (ValheimDiscord.PluginConfig.DiscordAdminList.Contains(Context.User.Id.ToString()))
             {
-                ValheimUtils.BroadcastMessage(message);
-                ValheimUtils.SendIngameChat(message);
+                Utils.BroadcastMessage(message);
+                Utils.SendIngameChat(message);
 
                 embedBuilder.AddField("[Status]", $"Message '{message}' has been sent.");
             }
