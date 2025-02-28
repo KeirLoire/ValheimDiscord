@@ -1,8 +1,10 @@
 ﻿using BepInEx;
+using Discord;
 using Discord.WebSocket;
 using System;
 using System.Threading;
 using UnityEngine;
+using ValheimDiscord.Discord;
 using ValheimDiscord.Model;
 
 namespace ValheimDiscord
@@ -36,12 +38,13 @@ namespace ValheimDiscord
             {
                 var discordConfig = new DiscordSocketConfig
                 {
-                    GatewayIntents = Discord.GatewayIntents.AllUnprivileged | Discord.GatewayIntents.MessageContent
+                    GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.MessageContent,
+                    RestClientProvider = MonoRestClientProvider.Instance
                 };
 
                 _client = new DiscordSocketClient(discordConfig);
 
-                await _client.LoginAsync(Discord.TokenType.Bot, _config.DiscordBotToken);
+                await _client.LoginAsync(TokenType.Bot, _config.DiscordBotToken);
                 await _client.StartAsync();
             }
             catch (Exception exception)
