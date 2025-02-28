@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony, Version=2.3.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lib.Harmony.2.3.5\lib\net48\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="assembly_valheim">
       <HintPath>..\lib\Valheim.0.219.16\lib\assembly_valheim.dll</HintPath>
     </Reference>
@@ -114,7 +117,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Discord\MonoRestClient.cs" />
+    <Compile Include="Discord\MonoRestClientProvider.cs" />
     <Compile Include="Model\Configuration.cs" />
+    <Compile Include="Model\MultipartFile.cs" />
+    <Compile Include="Patches\ChatPatch.cs" />
     <Compile Include="ValheimDiscord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

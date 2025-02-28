@@ -19,7 +19,7 @@ namespace ValheimDiscord.Model
 
             _discordBotToken = _configFile.Bind("General", "DiscordBotToken", "", "Discord bot token.");
             _discordBotPrefix = _configFile.Bind("General", "DiscordBotPrefix", "$", "Discord bot prefix for running commands.");
-            _discordTextChannelId = _configFile.Bind("General", "DiscordTextChannelId", "", "Discord text channel for listening chats.");
+            _discordTextChannelId = _configFile.Bind("General", "DiscordTextChannelId", "", "Discord text channel for syncing in-game chats.");
 
             _configFile.Save();
         }

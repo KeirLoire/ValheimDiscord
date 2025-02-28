@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using Discord;
 using Discord.WebSocket;
+using HarmonyLib;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,20 +18,33 @@ namespace ValheimDiscord
         private const string _pluginName = "ValheimDiscord";
         private const string _pluginVersion = "1.0.0";
 
-        private Configuration _config;
-        private DiscordSocketClient _client;
+        private static Configuration _config;
+        private static DiscordSocketClient _client;
 
-        public void Log(string message) => Debug.Log($"[{_pluginName}] {message}");
+        public static void Log(string message) => Debug.Log($"[{_pluginName}] {message}");
 
         public void Awake()
         {
             _config = new Configuration(Config);
+
+            var harmony = new Harmony(_pluginGuid);
+            harmony.PatchAll();
 
             Log("Loaded.");
 
             var thread = new Thread(StartClientAsync);
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        public static async void SendDiscordChat(string message)
+        {
+            var channel = await _client.GetChannelAsync(_config.DiscordTextChannelId) as IMessageChannel;
+
+            if (channel == null)
+                return;
+
+            await channel.SendMessageAsync(message);
         }
 
         private async void StartClientAsync()
@@ -69,7 +83,7 @@ namespace ValheimDiscord
             else if (message.Channel.Id == _config.DiscordTextChannelId)
                 SendIngameChat(user, content);
 
-            Log($"{message.Author.GlobalName} sent {message.Content}");
+            Log($"[Discord]{message.Author.GlobalName} sent {message.Content}");
         }
 
         private async Task HandleCommandAsync(SocketMessage message)
