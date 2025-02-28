@@ -3,7 +3,6 @@ using Discord.Commands;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using UnityEngine;
 using Color = Discord.Color;
 
 namespace ValheimDiscord.Discord
@@ -29,7 +28,7 @@ namespace ValheimDiscord.Discord
             var embedBuilder = CreateEmbedBuilder();
 
             embedBuilder.AddField("[Players]", players.Count() > 0
-                ? $"Players: {string.Join("\n", players)}"
+                ? string.Join("\n", players)
                 : "There are no players online.");
 
             await ReplyAsync(null, false, embedBuilder.Build());
