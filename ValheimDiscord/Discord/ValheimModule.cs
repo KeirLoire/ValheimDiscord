@@ -33,6 +33,97 @@ namespace ValheimDiscord.Discord
             await ReplyAsync(null, false, embedBuilder.Build());
         }
 
+        [Command("kick")]
+        [Summary("Kick a player from the server.")]
+        public async Task KickAsync([Summary("The username or Steam ID")]string player)
+        {
+            if (ZNet.instance == null)
+            {
+                ValheimDiscord.Log("ZNet.instance is null.");
+                return;
+            }
+
+            var embedBuilder = CreateEmbedBuilder();
+
+            if (ValheimDiscord.PluginConfig.DiscordAdminList.Contains(Context.User.Id.ToString()))
+            {
+                if (ZNet.instance.GetPlayerList().Any(x => x.m_name == player || x.m_host == player))
+                {
+                    ZNet.instance.Kick(player);
+
+                    embedBuilder.AddField("[Status]", $"Player '{player}' has been kicked.");
+                }
+                else
+                    embedBuilder.AddField("[Status]", $"Player '{player}' not found.");
+            }
+            else
+                embedBuilder.AddField("[Status]", "You do not have permission to run this command.");
+
+            await ReplyAsync(null, false, embedBuilder.Build());
+        }
+
+        [Command("ban")]
+        [Summary("Ban a player from the server.")]
+        public async Task BanAsync([Summary("The username or Steam ID")] string player)
+        {
+            if (ZNet.instance == null)
+            {
+                ValheimDiscord.Log("ZNet.instance is null.");
+                return;
+            }
+
+            var embedBuilder = CreateEmbedBuilder();
+
+            if (ValheimDiscord.PluginConfig.DiscordAdminList.Contains(Context.User.Id.ToString()))
+            {
+                if (!ZNet.instance.Banned.Contains(player))
+                {
+                    ZNet.instance.Ban(player);
+
+                    embedBuilder.AddField("[Status]", $"Player '{player}' has been banned.");
+                }
+                else
+                {
+                    embedBuilder.AddField("[Status]", $"Player '{player}' has already been banned.");
+                }
+            }
+            else
+                embedBuilder.AddField("[Status]", "You do not have permission to run this command.");
+
+            await ReplyAsync(null, false, embedBuilder.Build());
+        }
+
+        [Command("unban")]
+        [Summary("Unban a player from the server.")]
+        public async Task UnbanAsync([Summary("The username or Steam ID")] string player)
+        {
+            if (ZNet.instance == null)
+            {
+                ValheimDiscord.Log("ZNet.instance is null.");
+                return;
+            }
+
+            var embedBuilder = CreateEmbedBuilder();
+
+            if (ValheimDiscord.PluginConfig.DiscordAdminList.Contains(Context.User.Id.ToString()))
+            {
+                if (ZNet.instance.Banned.Contains(player))
+                {
+                    ZNet.instance.Unban(player);
+
+                    embedBuilder.AddField("[Status]", $"Player '{player}' has been unbanned.");
+                }
+                else
+                {
+                    embedBuilder.AddField("[Status]", $"Player '{player}' has already been unbanned.");
+                }
+            }
+            else
+                embedBuilder.AddField("[Status]", "You do not have permission to run this command.");
+
+            await ReplyAsync(null, false, embedBuilder.Build());
+        }
+
         private EmbedBuilder CreateEmbedBuilder()
         {
             var embedBuilder = new EmbedBuilder()
