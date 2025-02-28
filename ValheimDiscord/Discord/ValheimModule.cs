@@ -128,7 +128,7 @@ namespace ValheimDiscord.Discord
 
         [Command("broadcast")]
         [Summary("Broadcast a message to the server.")]
-        public async Task BroadcastAsync([Summary("The message")] string message)
+        public async Task BroadcastAsync([Summary("The message")] params string[] messageParts)
         {
             if (ZNet.instance == null)
             {
@@ -136,6 +136,7 @@ namespace ValheimDiscord.Discord
                 return;
             }
 
+            var message = string.Join(" ", messageParts);
             var embedBuilder = CreateEmbedBuilder();
 
             if (ValheimDiscord.PluginConfig.DiscordAdminList.Contains(Context.User.Id.ToString()))
