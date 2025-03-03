@@ -11,6 +11,12 @@ Valheim Discord Bot is a BepInEx mod that brings real-time game chats from your 
 
 Compatible to both Linux and Windows
 
+## Features
+
+- Chat synchronization (Discord text channel and in-game shouts)
+- Join/Leave messages
+- Discord admin in-game commands (broadcast, kick, ban, unban)
+
 ## Mod installation
 
 1. Extract ValheimDiscord.zip
