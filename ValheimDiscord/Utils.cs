@@ -14,7 +14,7 @@ namespace ValheimDiscord
 
             var userInfo = new UserInfo()
             {
-                Name = username,
+                Name = $"<color=#7289da>{username}</color>",
                 Gamertag = username,
                 NetworkUserId = "Discord"
             };
