@@ -1,0 +1,37 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - README.md
+  pull_request:
+    branches: [main, master]
+    paths-ignore:
+      - README.md
+
+jobs:
+  build:
+    name: Build
+    runs-on: [self-hosted, Windows, X64]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Restore NuGet packages
+        run: |
+          Set-Location Source
+          nuget restore
+
+      - name: Build assemblies
+        run: msbuild Source\ValheimDiscord.sln /p:Configuration=Release
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ValheimDiscord
+          path: |
+            ValheimDiscord/bin/Debug/Discord.*.dll
+            Microsoft.*.dll
+            Newtonsoft.Json.dll
+            System.*.dll
+            ValheimDiscord/bin/Debug/ValheimDiscord.dll
