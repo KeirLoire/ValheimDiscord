@@ -1,4 +1,6 @@
 ﻿using HarmonyLib;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace ValheimDiscord.Patches
@@ -40,7 +42,7 @@ namespace ValheimDiscord.Patches
         [HarmonyPatch(new[] { typeof(ZNetPeer) })]
         public static class Disconnect
         {
-            public static void Postfix(ZNet __instance, ZNetPeer peer)
+            public static void Prefix(ZNet __instance, ZNetPeer peer)
             {
                 if (peer == null)
                     return;
@@ -48,7 +50,12 @@ namespace ValheimDiscord.Patches
                 if (string.IsNullOrWhiteSpace(peer.m_playerName))
                     return;
 
-                ValheimDiscord.SendDiscordChat($"{peer.m_playerName} has left the server.");
+                var type = __instance.GetType();
+                var field = type.GetField("m_peers", BindingFlags.NonPublic | BindingFlags.Instance);
+                var peers = field.GetValue(__instance) as List<ZNetPeer>;
+
+                if (peers.Any(p => p.m_uid == peer.m_uid))
+                    ValheimDiscord.SendDiscordChat($"{peer.m_playerName} has left the server.");
             }
         }
     }
