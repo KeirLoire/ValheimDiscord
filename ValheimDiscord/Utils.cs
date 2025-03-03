@@ -32,7 +32,7 @@ namespace ValheimDiscord
 
             var userInfo = new UserInfo()
             {
-                Name = "Server",
+                Name = "<color=#900D09>Server</color>",
                 Gamertag = "Server",
                 NetworkUserId = "Discord"
             };
