@@ -30,8 +30,8 @@ jobs:
         with:
           name: ValheimDiscord
           path: |
-            ValheimDiscord/bin/Debug/Discord.*.dll
-            Microsoft.*.dll
-            Newtonsoft.Json.dll
-            System.*.dll
-            ValheimDiscord/bin/Debug/ValheimDiscord.dll
+            ValheimDiscord/bin/Release/Discord.*.dll
+            ValheimDiscord/bin/Release/Microsoft.*.dll
+            ValheimDiscord/bin/Release/Newtonsoft.Json.dll
+            ValheimDiscord/bin/Release/System.*.dll
+            ValheimDiscord/bin/Release/ValheimDiscord.dll
