@@ -35,26 +35,13 @@ namespace ValheimDiscord.Patches
             }
         }
 
-        [HarmonyPatch]
+        [HarmonyPatch(typeof(ZNet))]
+        [HarmonyPatch(nameof(ZNet.Disconnect))]
+        [HarmonyPatch(new[] { typeof(ZNetPeer) })]
         public static class Disconnect
         {
-            public static MethodBase TargetMethod()
+            public static void Postfix(ZNet __instance, ZNetPeer peer)
             {
-                var type = AccessTools.TypeByName("ZNet");
-
-                return AccessTools.Method(type, "RPC_Disconnect");
-            }
-
-            public static void Prefix(ZNet __instance, ZRpc rpc)
-            {
-                var type = __instance.GetType();
-                var method = type.GetMethod("GetPeer", BindingFlags.NonPublic | BindingFlags.Instance);
-
-                if (method == null)
-                    return;
-
-                var peer = method.Invoke(__instance, new object[] { rpc }) as ZNetPeer;
-
                 if (peer == null)
                     return;
 
