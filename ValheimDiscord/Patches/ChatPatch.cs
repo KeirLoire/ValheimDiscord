@@ -22,7 +22,7 @@ namespace ValheimDiscord.Patches
                 {
                     ValheimDiscord.SendDiscordChat($"{userInfo.Name}: {text}");
 
-                    ValheimDiscord.Log($"[INGAME]{userInfo.Name} sent {text}");
+                    ValheimDiscord.Log($"[In-game] {userInfo.Name} sent {text}");
                 }
             }
         }

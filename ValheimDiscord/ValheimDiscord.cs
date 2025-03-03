@@ -98,7 +98,7 @@ namespace ValheimDiscord
             else if (message.Channel.Id == PluginConfig.DiscordTextChannelId)
                 Utils.SendIngameChat(content, user);
 
-            Log($"[Discord]{message.Author.GlobalName} sent {message.Content}");
+            Log($"[Discord] {message.Author.GlobalName} sent {message.Content}");
         }
     }
 }
