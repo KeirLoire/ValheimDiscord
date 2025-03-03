@@ -14,12 +14,12 @@ Compatible to both Linux and Windows
 ## Mod installation
 
 1. Extract ValheimDiscord.zip
-2. Copy .dll files to {GameDirectory}/BepInEx/plugins/
-3. Run server.
+2. Copy .dll files to `{GameDirectory}/BepInEx/plugins/`
+3. Run server
 
 ## Configuration
 
-1. Edit {GameDirectory}/BepInEx/config/com.keirloire.valheimdiscord.cfg
+1. Edit `{GameDirectory}/BepInEx/config/com.keirloire.valheimdiscord.cfg`
 2. Restart server
 
 ## Prerequisites
