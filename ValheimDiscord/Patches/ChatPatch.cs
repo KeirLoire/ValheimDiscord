@@ -16,9 +16,9 @@ namespace ValheimDiscord.Patches
                 return AccessTools.Method(type, "RPC_ChatMessage");
             }
 
-            public static void Postfix(Chat __instance, long sender, Vector3 position, int type, UserInfo userInfo, string text, string senderAccountId)
+            public static void Postfix(Chat __instance, long sender, Vector3 position, int type, UserInfo userInfo, string text)
             {
-                if (userInfo.NetworkUserId != "Discord" && !string.IsNullOrWhiteSpace(text))
+                if (userInfo.UserId.m_platform != "Discord" && !string.IsNullOrWhiteSpace(text))
                 {
                     ValheimDiscord.SendDiscordChat($"{userInfo.Name}: {text}");
 

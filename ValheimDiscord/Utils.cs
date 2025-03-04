@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Splatform;
+using UnityEngine;
 
 namespace ValheimDiscord
 {
@@ -15,11 +16,10 @@ namespace ValheimDiscord
             var userInfo = new UserInfo()
             {
                 Name = $"<color=#7289da>{username}</color>",
-                Gamertag = username,
-                NetworkUserId = "Discord"
+                UserId = new PlatformUserID("Discord", username)
             };
 
-            ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "ChatMessage", Vector3.zero, 0, userInfo, message, userInfo.NetworkUserId);
+            ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "ChatMessage", Vector3.zero, 0, userInfo, message);
         }
 
         public static void BroadcastMessage(string message)
@@ -33,12 +33,11 @@ namespace ValheimDiscord
             var userInfo = new UserInfo()
             {
                 Name = "<color=#900D09>Server</color>",
-                Gamertag = "Server",
-                NetworkUserId = "Discord"
+                UserId = new PlatformUserID("Discord", "Server")
             };
 
             ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "ShowMessage", 2, message);
-            ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "ChatMessage", Vector3.zero, 0, userInfo, message, userInfo.NetworkUserId);
+            ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "ChatMessage", Vector3.zero, 0, userInfo, message);
         }
     }
 }

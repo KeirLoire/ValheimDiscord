@@ -48,7 +48,7 @@ namespace ValheimDiscord.Discord
 
             if (ValheimDiscord.PluginConfig.DiscordAdminList.Contains(Context.User.Id.ToString()))
             {
-                if (ZNet.instance.GetPlayerList().Any(x => x.m_name == player || x.m_host == player))
+                if (ZNet.instance.GetPlayerList().Any(x => x.m_name == player || ZNet.instance.GetPeerByHostName(player) != null))
                 {
                     ZNet.instance.Kick(player);
 

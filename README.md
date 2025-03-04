@@ -1,7 +1,7 @@
 <p align="center">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz4AicV1FZxYaSur7uQ1IgXCtNfquUauaSqA&s" alt="ValheimDiscord Preview"/><br>
     <b style="font-size:25px">ValheimDiscord</b><br>
-    <a href="https://store.steampowered.com/app/892970/Valheim/"><img src="https://img.shields.io/badge/valheim-0.219.16-b5651d?label=Valheim&style=flat&logo=valheim" alt="Valheim logo"/></a>
+    <a href="https://store.steampowered.com/app/892970/Valheim/"><img src="https://img.shields.io/badge/valheim-0.220.3-b5651d?label=Valheim&style=flat&logo=valheim" alt="Valheim logo"/></a>
     <a href="https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48"><img src="https://img.shields.io/badge/dotnet-4.8.0-512bd4?label=.NET%20Framework&style=flat&logo=dotnet" alt=".NET logo"/></a>
 </p>
 
